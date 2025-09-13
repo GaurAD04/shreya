@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Love Letter</title>
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'IM Fell English SC', serif;
+      background: linear-gradient(to bottom right, #a2c2e2, #f8c8dc);
+      color: #2e2e2e;
+      text-align: center;
+      overflow-x: hidden; /* allow vertical scroll */
+      padding-bottom: 200px; /* spacing for the end of the letter */
+    }
+
+    header, .letter, .image {
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      padding: 2rem;
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #1f2a44;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    }
+
+    .letter {
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      font-size: 1.3rem;
+      line-height: 1.8;
+      text-align: left;
+    }
+
+    .image {
+      margin: 1rem auto;
+      max-width: 250px;
+    }
+
+    .image img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    /* Leaves covering screen */
+    .leaf {
+      position: fixed; /* fixed so leaves don’t block scrolling */
+      color: #d2691e;
+      opacity: 0.95;
+      z-index: 5;
+      transition: transform 2s ease-out, opacity 2s ease-out;
+    }
+
+    /* Popup styling */
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2rem;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      z-index: 10;
+      display: none;
+    }
+
+    .popup h2 {
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+    }
+
+    .popup button {
+      margin: 0.5rem;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #a2c2e2;
+      color: #fff;
+      transition: background 0.3s;
+    }
+
+    .popup button:hover {
+      background: #6d9acb;
+    }
+  </style>
+</head>
+<body>
+  <!-- Popup -->
+  <div class="popup" id="popup">
+    <h2>Hello princess, long ago a fool left something under the leaves for you.</h2>
+    <button id="show">Show me what lies ahead</button>
+    <button id="ignore">I don't care about this person</button>
+  </div>
+
+  <!-- Content -->
+  <header id="header">I found someone</header>
+  <div class="image" id="image">
+    <img src="images/girlfriend.jpg" alt="Her Picture">
+  </div>
+  <div class="letter" id="letter">
+    <p id="text"></p>
+  </div>
+
+  <script>
+    // Create dense leaf coverage (like wallpaper)
+    const totalLeaves = 300;
+    const leaves = [];
+    for (let i = 0; i < totalLeaves; i++) {
+      const leaf = document.createElement("div");
+      leaf.classList.add("leaf");
+      leaf.innerHTML = "🍂";
+      leaf.style.left = Math.random() * 100 + "vw";
+      leaf.style.top = Math.random() * 100 + "vh";
+      leaf.style.fontSize = (20 + Math.random() * 40) + "px";
+      leaf.style.transform = `rotate(${Math.random() * 360}deg)`;
+      document.body.appendChild(leaf);
+      leaves.push(leaf);
+    }
+
+    // Show popup after 3 seconds
+    setTimeout(() => {
+      document.getElementById("popup").style.display = "block";
+    }, 3000);
+
+    // Typing effect
+    const message = `Dearest,
+
+I am a fool, I’ve always been one. But this time I don’t feel troubled about it for I am a fool for you. You added colours to my life and such is your grace, you are just gracefully.
+
+You’ve given me moments that I will never forget. I remember seeing you for the first time on that natural ice cream parlour, my heart wasn’t ready for what was to come as it skipped a couple of beats the moment it saw you, as they say, “you came in like a shot of espresso”. I remember talking continuously as if my inner child saw his happiness again, for you are my happiness now.
+
+I remember the first time we went to the beach and I held your hand, even though it was for a brief moment it felt like happiness just filled up my body.
+
+I remember watching “Love Aaj Kal” with you. That whole day was just ineffable. I remember kissing you on the forehead for the first time, holding you in my arms. You gave me the scent of the woman that I’ll never forget. And then it happened, the kiss. It felt as if the world stopped, the slight tension to it, and the way it made me feel is an experience that I don’t want any other human to have.
+
+And then came the happiest day of my life, 29th August, the day I said I love you to you. You don’t know this but I did sit with that feeling for a long time before confessing and I know that it’s one of the most ugly confessions known to mankind but the only thing that I can assure you of is that whatever I said that day was as true as it can be.
+
+I wish to know you more miss Darcy, I will mess up as I have before but please allow me to be a part of your beautiful world. Holding you and kissing your face is a privilege that I dread to lose now.
+
+I’ll see you with lilies the next time I meet you. I did find someone I love, I found love, I found you.
+
+Completely Yours,
+Aditya (the fool)
+`;
+
+    let i = 0;
+    function typeWriter() {
+      if (i < message.length) {
+        document.getElementById("text").innerHTML += message.charAt(i);
+        i++;
+        setTimeout(typeWriter, 60);
+      }
+    }
+
+    // Button actions
+    document.getElementById("show").addEventListener("click", () => {
+      // Blow away leaves
+      leaves.forEach(leaf => {
+        const angleX = (Math.random() - 0.5) * 2000;
+        const angleY = - (200 + Math.random() * 1000);
+        leaf.style.transform = `translate(${angleX}px, ${angleY}px) rotate(${Math.random()*720}deg)`;
+        leaf.style.opacity = 0;
+      });
+
+      // Reveal content after leaves fade
+      setTimeout(() => {
+        document.getElementById("header").style.opacity = 1;
+        document.getElementById("image").style.opacity = 1;
+        document.getElementById("letter").style.opacity = 1;
+        typeWriter();
+      }, 2000);
+
+      document.getElementById("popup").style.display = "none";
+    });
+
+    document.getElementById("ignore").addEventListener("click", () => {
+      document.getElementById("popup").innerHTML = "<h2>Oh... okay 💔</h2>";
+    });
+  </script>
+</body>
+</html>
